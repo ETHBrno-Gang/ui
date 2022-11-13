@@ -79,24 +79,27 @@ const data3 = data2.map(({ x, y }) => ({ x, y: y + Math.random() * 50 + 12 }));
 const BlockchainsOverview = (props: Props) => {
   const [ratedNetworkResult] = useBlockchainMetrics();
   console.log(ratedNetworkResult.data);
+  if(ratedNetworkResult.isLoading) {
+    return <>Loading...</>
+  }
   return (
     <Container>
       <LineChart
         name="Nakamoto coefficient"
         data={{
-          bitcoin: {
-            dataset: data1,
-            color: "#012345",
-          },
           ethereum: {
-            dataset: data2,
+            dataset: ratedNetworkResult.data as any,
             color: "#039999",
-          },
-          polkadot: {
-            dataset: data3,
-            color: "#f582d8",
-          },
-        }}
+          }
+          // bitcoin: {
+          //   dataset: data1,
+          //   color: "#012345",
+          // },
+          // polkadot: {
+          //   dataset: data3,
+          //   color: "#f582d8",
+          // },
+        } as any}
       />
     </Container>
   );

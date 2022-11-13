@@ -56,7 +56,7 @@ const axisLeftTickLabelProps = {
 };
 
 const accessors = {
-  xAccessor: (d: LineData) => new Date(`${d.x}T00:00:00`),
+  xAccessor: (d: LineData) => new Date(d.x),
   yAccessor: (d: LineData) => d.y,
 };
 
@@ -81,16 +81,20 @@ export default function LineChart({
     const lastIndex = data.dataset.length - 1;
     return { key, color: data.color, data: data.dataset[lastIndex] };
   });
-  console.log(latestDataPoints)
   return (
     <div>
       <Text h1 css={{ mt: 8 }}>
         {name}
       </Text>
-      <div style={{display: "flex", gap: "2rem", margin: "1rem 0"}}>
-      {latestDataPoints.map(({ key, data, color }) => (
-        <MetricCard key={key} blockchainName={getBlockchainById(key).name} value={data.y} color={color} />
-      ))}
+      <div style={{ display: "flex", gap: "2rem", margin: "1rem 0" }}>
+        {latestDataPoints.map(({ key, data, color }) => (
+          <MetricCard
+            key={key}
+            blockchainName={getBlockchainById(key).name}
+            value={data.y}
+            color={color}
+          />
+        ))}
       </div>
       <LegendOrdinal
         scale={ordinalColorScale}
@@ -181,10 +185,7 @@ export default function LineChart({
             return (
               <div>
                 <div className="date">
-                  {format(
-                    accessors.xAccessor(tooltipData.nearestDatum.datum),
-                    "MMM d"
-                  )}
+                  {tooltipData.nearestDatum.datum.x.toString()}
                 </div>
                 {Object.entries(tooltipData.datumByKey).map(
                   (lineDataArray, arrIndex) => {
