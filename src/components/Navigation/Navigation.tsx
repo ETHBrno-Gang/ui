@@ -1,7 +1,7 @@
 import { Navbar, Switch, useTheme } from "@nextui-org/react";
 import { useTheme as useNextTheme } from "next-themes";
 import { Link, useLocation } from "react-router-dom";
-import { routes } from "./routes";
+import { blockchains } from "../../constants/blockchains";
 
 type Props = {};
 
@@ -14,10 +14,9 @@ const Navigation = (props: Props) => {
     <div>
       <Navbar variant="floating" isCompact={false} maxWidth="fluid">
       <Navbar.Brand>
-          
         </Navbar.Brand>
         <Navbar.Content>
-          {routes.map(({ name, path }) => (
+          {blockchains.map(({ name, path }) => (
             <Navbar.Link href={path} isActive={pathname === path}>
               <Link to={path}>
                 { name}
